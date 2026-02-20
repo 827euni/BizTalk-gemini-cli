@@ -48,12 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!response.ok) {
-                throw new Error('서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                const errorData = await response.json().catch(() => null);
+                const errorMessage = errorData?.error || '서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+                throw new Error(errorMessage);
             }
 
             const data = await response.json();
             
-            // 백엔드 응답 형식에 따라 'data.converted_text'는 달라질 수 있습니다.
             outputText.textContent = data.converted_text || '결과를 받아오지 못했습니다.';
             copyBtn.disabled = false;
 
@@ -80,24 +81,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function toggleLoading(isLoading) {
+        convertBtn.disabled = isLoading;
         if (isLoading) {
-            convertBtn.disabled = true;
-            btnText.style.display = 'none';
-            spinner.style.display = 'block';
+            btnText.classList.add('hidden');
+            spinner.classList.remove('hidden');
         } else {
-            convertBtn.disabled = false;
-            btnText.style.display = 'inline';
-            spinner.style.display = 'none';
+            btnText.classList.remove('hidden');
+            spinner.classList.add('hidden');
         }
     }
 
     function showFeedback(message, type) {
         feedbackMessage.textContent = message;
-        feedbackMessage.className = 'show';
-        feedbackMessage.classList.add(type);
+        
+        // Reset classes
+        feedbackMessage.classList.remove('opacity-0', '-translate-y-4', 'bg-green-500', 'bg-red-500');
 
+        // Apply type-specific class
+        if (type === 'success') {
+            feedbackMessage.classList.add('bg-green-500');
+        } else {
+            feedbackMessage.classList.add('bg-red-500');
+        }
+        
+        // Animate in
+        feedbackMessage.classList.remove('opacity-0', '-translate-y-4');
+        feedbackMessage.classList.add('opacity-100', 'translate-y-0');
+
+        // Animate out after 3 seconds
         setTimeout(() => {
-            feedbackMessage.className = '';
+            feedbackMessage.classList.remove('opacity-100', 'translate-y-0');
+            feedbackMessage.classList.add('opacity-0', '-translate-y-4');
         }, 3000);
     }
 });

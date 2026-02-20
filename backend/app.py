@@ -23,7 +23,7 @@ def serve_index():
     """
     루트 URL 요청 시 frontend/index.html 파일을 제공합니다.
     """
-    return send_from_directory(app.static_older, 'index.html')
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/<path:path>')
 def serve_static(path):
