@@ -23,7 +23,7 @@ def serve_index():
     """
     루트 URL 요청 시 frontend/index.html 파일을 제공합니다.
     """
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory(app.static_older, 'index.html')
 
 @app.route('/<path:path>')
 def serve_static(path):
@@ -31,6 +31,7 @@ def serve_static(path):
     frontend 폴더 내의 정적 파일들을 제공합니다 (css, js 등).
     """
     return send_from_directory(app.static_folder, path)
+
 
 @app.route('/api/convert', methods=['POST'])
 def convert_tone():
@@ -56,4 +57,4 @@ def convert_tone():
 
 if __name__ == '__main__':
     # 디버그 모드로 Flask 앱을 실행합니다.
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5000)
