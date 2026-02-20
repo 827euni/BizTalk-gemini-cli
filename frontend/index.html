@@ -4,56 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BizTone Converter</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+        }
+        /* Custom spinner color for loading button */
+        .spinner {
+            border-top-color: #e0e7ff; /* Lighter blue for spinner on darker button */
+        }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
-        <header class="text-center mb-8">
-            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">BizTone Converter</h1>
-            <p class="text-md sm:text-lg text-gray-600 mt-2">당신의 생각을 전문적인 비즈니스 언어로 변환해 보세요.</p>
+<body class="bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 text-gray-800 min-h-screen flex items-center justify-center py-10">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-5xl">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-blue-800 drop-shadow-lg">BizTone Converter</h1>
+            <p class="text-lg sm:text-xl text-indigo-600 mt-4 max-w-2xl mx-auto">
+                당신의 생각을 전문적이고 매력적인 비즈니스 언어로 변환하여, 소통의 품격을 높여보세요.
+            </p>
         </header>
 
-        <main class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <main class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Input Card -->
-            <div class="bg-white rounded-xl shadow-md p-6 flex flex-col">
-                <textarea id="inputText" class="w-full h-48 p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 resize-none" placeholder="변환할 내용을 입력하세요... (최대 500자)" maxlength="500"></textarea>
-                <div class="flex justify-between items-center mt-4 text-sm text-gray-500">
-                    <div id="charCounter">0 / 500</div>
-                    <fieldset class="flex items-center gap-4">
+            <div class="bg-white rounded-3xl shadow-xl p-8 flex flex-col transform transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl">
+                <textarea id="inputText" class="w-full h-56 p-4 bg-blue-50 border border-blue-200 rounded-xl focus:ring-4 focus:ring-blue-300 focus:border-blue-500 transition-all duration-200 text-lg resize-none placeholder-gray-500" placeholder="변환할 내용을 입력하세요... (최대 500자)" maxlength="500"></textarea>
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-6 text-base text-gray-600 space-y-4 sm:space-y-0">
+                    <div id="charCounter" class="font-medium">0 / 500</div>
+                    <fieldset class="flex items-center gap-6">
                         <legend class="sr-only">변환 대상</legend>
                         <div class="flex items-center">
-                            <input type="radio" id="target-boss" name="target" value="상사" class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" checked>
-                            <label for="target-boss" class="ml-2 text-gray-700">상사</label>
+                            <input type="radio" id="target-boss" name="target" value="상사" class="h-5 w-5 text-indigo-600 border-gray-300 focus:ring-indigo-500 transform scale-110" checked>
+                            <label for="target-boss" class="ml-2 text-indigo-700 font-semibold cursor-pointer">상사</label>
                         </div>
                         <div class="flex items-center">
-                            <input type="radio" id="target-colleague" name="target" value="동료" class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                            <label for="target-colleague" class="ml-2 text-gray-700">동료</label>
+                            <input type="radio" id="target-colleague" name="target" value="동료" class="h-5 w-5 text-indigo-600 border-gray-300 focus:ring-indigo-500 transform scale-110">
+                            <label for="target-colleague" class="ml-2 text-indigo-700 font-semibold cursor-pointer">동료</label>
                         </div>
                         <div class="flex items-center">
-                            <input type="radio" id="target-customer" name="target" value="고객" class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500">
-                            <label for="target-customer" class="ml-2 text-gray-700">고객</label>
+                            <input type="radio" id="target-customer" name="target" value="고객" class="h-5 w-5 text-indigo-600 border-gray-300 focus:ring-indigo-500 transform scale-110">
+                            <label for="target-customer" class="ml-2 text-indigo-700 font-semibold cursor-pointer">고객</label>
                         </div>
                     </fieldset>
                 </div>
-                <button id="convertBtn" class="mt-6 w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition duration-200 flex items-center justify-center">
-                    <span class="btn-text">변환하기</span>
-                    <div class="spinner hidden animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                <button id="convertBtn" class="mt-8 w-full bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-extrabold py-4 px-6 rounded-xl hover:from-blue-700 hover:to-indigo-800 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center space-x-3 text-lg shadow-lg hover:shadow-xl">
+                    <span class="btn-text">🚀 변환하기</span>
+                    <div class="spinner hidden animate-spin rounded-full h-6 w-6 border-4 border-t-4 border-blue-200"></div>
                 </button>
             </div>
 
             <!-- Output Card -->
-            <div class="bg-white rounded-xl shadow-md p-6 relative flex flex-col">
-                <div id="outputText" class="w-full h-full p-3 bg-gray-50 border border-gray-200 rounded-lg min-h-[244px] whitespace-pre-wrap break-words" data-placeholder="변환 결과가 여기에 표시됩니다."></div>
-                <button id="copyBtn" class="absolute top-8 right-8 text-gray-500 hover:text-blue-600 disabled:text-gray-300 transition duration-200" disabled>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            <div class="bg-white rounded-3xl shadow-xl p-8 relative flex flex-col transform transition-all duration-300 hover:scale-[1.01] hover:shadow-2xl">
+                <div id="outputText" class="w-full h-full p-4 bg-green-50 border border-green-200 rounded-xl min-h-[268px] whitespace-pre-wrap break-words text-lg text-gray-700 placeholder-gray-500 flex items-center justify-center text-center" data-placeholder="변환 결과가 여기에 표시됩니다."></div>
+                <button id="copyBtn" class="absolute top-6 right-6 text-gray-500 hover:text-green-600 disabled:text-gray-300 transition-colors duration-200 p-2 rounded-full bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                     </svg>
                 </button>
             </div>
         </main>
         
         <!-- Feedback Message -->
-        <div id="feedbackMessage" class="fixed bottom-10 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg text-white font-semibold shadow-lg transition-all transform opacity-0 -translate-y-4">
+        <div id="feedbackMessage" class="fixed bottom-10 left-1/2 -translate-x-1/2 px-8 py-4 rounded-full text-white font-bold shadow-2xl transition-all transform duration-300 opacity-0 scale-90 z-50">
             Feedback
         </div>
     </div>
